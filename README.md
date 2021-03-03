@@ -7,6 +7,7 @@ Posteriormente deberá realizar la implantación de ambos sitios web en Amazon W
 - 8080
 - 1936
 - 3306 
+![](https://raw.githubusercontent.com/joseean29/Practica17-IAW/main/images/puertos.PNG)
 
 ## Añadimos a nustro docker-compose 
 A continuación se muestra un fragmento de un archivo docker-compose.yml que incluye un servicio de balanceo de carga con HAProxy que nos puede servir de ejemplo:
@@ -58,13 +59,15 @@ En el siguiente ejemplo estaríamos iniciando todos los servicios que están def
 
 docker-compose up --scale wordpress=4
 
-    En el siguiente ejemplo estaríamos iniciando todos los servicios que están definidos en el archivo docker-compose.yml y para el servicio de apache estaríamos creando 4 instancias. docker-compose up --sacale apache=4 
+En el siguiente ejemplo estaríamos iniciando todos los servicios que están definidos en el archivo docker-compose.yml y para el servicio de apache estaríamos creando 4 instancias. docker-compose up --sacale apache=4 
+![](https://raw.githubusercontent.com/joseean29/Practica17-IAW/main/images/scale.PNG)
 
-Si inciamos nuesto navegador con nustra ip aparcera nustra pila lamp
-
+Si inciamos nuesto navegador con nustra ip aparcera nuestra pila lamp
+![](https://raw.githubusercontent.com/joseean29/Practica17-IAW/main/images/mysql.PNG)
 
 Sinciamos nuesto navegador con nustra ip con :1936
 
-usuario:stats contraseña:stats imagen
+usuario:stats contraseña:stats 
 
-    Tendremos toda la informacion general 
+Tendremos toda la informacion general 
+![](https://raw.githubusercontent.com/joseean29/Practica17-IAW/main/images/haproxy.PNG)
