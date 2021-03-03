@@ -7,9 +7,10 @@ Posteriormente deberá realizar la implantación de ambos sitios web en Amazon W
 - 8080
 - 1936
 - 3306 
+
 ![](https://raw.githubusercontent.com/joseean29/Practica17-IAW/main/images/puertos.PNG)
 
-## Añadimos a nustro docker-compose 
+## Añadimos HAProxy
 A continuación se muestra un fragmento de un archivo docker-compose.yml que incluye un servicio de balanceo de carga con HAProxy que nos puede servir de ejemplo:
 
 ~~~~
@@ -37,37 +38,36 @@ services:
 - Creamos un enlace con el servicio que queremos balancear. Los enlaces permiten que los contenedores se descubran entre sí y transfieran de manera segura información sobre un contenedor a otro contenedor.
 
 - Es necesario montar el socket UNIX del Docker daemon (/var/run/docker.sock) para que el contenedor lb pueda comunicarse con el Docker daemon y obtener información del resto de contenedores.
+
 - Indicamos que usará la red de frontend.
 
 
-Cómo escalar los servicios definidos en un archivo docker-compose.yml
-
+## Cómo escalar los servicios definidos en un archivo docker-compose.yml
 Cuando ejecutamos docker-compose tenemos la posibilidad de indicar el número de instancias que queremos tener de cada uno de los servicios que vamos a crear.
 
 El comando sería el siguiente:
-
+~~~~
 docker-compose up --scale SERVICE=NUM
+~~~~
 
 Donde:
+- SERVICE es el nombre del servicio que queremos escalar
+- NUM es el número de instancias que queremos tener de ese servicio.
 
-    SERVICE es el nombre del servicio que queremos escalar
-    NUM es el número de instancias que queremos tener de ese servicio.
+Ahora vemos que en el siguiente ejemplo estaríamos iniciando todos los servicios que están definidos en el archivo docker-compose.yml y para el servicio de apache creamos 4 instancias.
+~~~~
+docker-compose up --scale apache=4
+~~~~
 
-Ejemplo:
-
-En el siguiente ejemplo estaríamos iniciando todos los servicios que están definidos en el archivo docker-compose.yml y para el servicio de wordpress estaríamos creando 4 instancias.
-
-docker-compose up --scale wordpress=4
-
-En el siguiente ejemplo estaríamos iniciando todos los servicios que están definidos en el archivo docker-compose.yml y para el servicio de apache estaríamos creando 4 instancias. docker-compose up --sacale apache=4 
 ![](https://raw.githubusercontent.com/joseean29/Practica17-IAW/main/images/scale.PNG)
 
-Si inciamos nuesto navegador con nustra ip aparcera nuestra pila lamp
+### Si inciamos nuesto navegador con nuestra ip aparcerá la pila lamp
 ![](https://raw.githubusercontent.com/joseean29/Practica17-IAW/main/images/mysql.PNG)
 
-Sinciamos nuesto navegador con nustra ip con :1936
+### Al entrar con el puerto 1936
+Se nos pide una autenticación y es la siguiente:
+- usuario:stats 
+- contraseña:stats 
 
-usuario:stats contraseña:stats 
-
-Tendremos toda la informacion general 
+- Una vez dentro tendremos toda la informacion general 
 ![](https://raw.githubusercontent.com/joseean29/Practica17-IAW/main/images/haproxy.PNG)
