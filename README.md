@@ -9,7 +9,24 @@ Posteriormente deberá realizar la implantación de ambos sitios web en Amazon W
 - 3306 
 
 ## Añadimos a nustro docker-compose 
-A continuación se muestra un fragmento de un archivo docker-compose.yml que incluye un servicio de balanceo de carga con HAProxy que nos puede servir de ejemplo: 
+A continuación se muestra un fragmento de un archivo docker-compose.yml que incluye un servicio de balanceo de carga con HAProxy que nos puede servir de ejemplo:
+
+~~~~
+version: '3.4'
+
+services:
+  lb:
+    image: dockercloud/haproxy
+    ports:
+      - 80:80
+      - 1936:1936
+    links:
+      - apache
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - frontend-network
+~~~~
 
 - Utilizaremos la imagen dockercloud/haproxy que está disponible en Docker Hub.
 - El puerto 80 será el puerto del servicio que queremos balancear.
@@ -19,6 +36,9 @@ A continuación se muestra un fragmento de un archivo docker-compose.yml que inc
 - Creamos un enlace con el servicio que queremos balancear. Los enlaces permiten que los contenedores se descubran entre sí y transfieran de manera segura información sobre un contenedor a otro contenedor.
 
 - Es necesario montar el socket UNIX del Docker daemon (/var/run/docker.sock) para que el contenedor lb pueda comunicarse con el Docker daemon y obtener información del resto de contenedores.
+- Indicamos que usará la red de frontend.
+
+
 Cómo escalar los servicios definidos en un archivo docker-compose.yml
 
 Cuando ejecutamos docker-compose tenemos la posibilidad de indicar el número de instancias que queremos tener de cada uno de los servicios que vamos a crear.
